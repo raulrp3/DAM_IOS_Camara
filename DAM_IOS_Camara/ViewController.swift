@@ -46,5 +46,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         present(imagePicker, animated: true, completion: nil)
     }
     
+    
+    @IBAction func saveAction(_ sender: Any) {
+        UIImageWriteToSavedPhotosAlbum(mImageview.image!, <#T##completionTarget: Any?##Any?#>, nil, nil)
+    }
+    
 }
 
