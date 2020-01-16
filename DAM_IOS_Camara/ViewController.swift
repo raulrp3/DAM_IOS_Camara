@@ -42,13 +42,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
         
         present(imagePicker, animated: true, completion: nil)
     }
     
     
     @IBAction func saveAction(_ sender: Any) {
-        UIImageWriteToSavedPhotosAlbum(mImageview.image!, <#T##completionTarget: Any?##Any?#>, nil, nil)
+        UIImageWriteToSavedPhotosAlbum(mImageview.image!, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    @objc func image(_ image: UIImage, didFinishSavingWithError error: NSError?, contextInfo: UnsafeRawPointer){
+        if let error = error{
+            let alertController = UIAlertController(title: "¡ERROR!", message: error.localizedDescription, preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
+            
+            alertController.addAction(okAction)
+            
+            present(alertController, animated: true, completion: nil)
+        }else{
+            let alertController = UIAlertController(title: "¡ÉXITO!", message: "La imagen se ha guardado correctamente", preferredStyle: .alert)
+            
+            let okAction = UIAlertAction(title: "Aceptar", style: .default, handler: nil)
+            
+            alertController.addAction(okAction)
+            
+            present(alertController, animated: true, completion: nil)
+        }
     }
     
 }
